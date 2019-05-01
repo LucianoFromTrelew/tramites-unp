@@ -1,0 +1,40 @@
+version: "3"
+services:
+  server:
+    build:
+      context: ./server
+      args:
+        USER_ID: 1000
+        GROUP_ID: 1000
+    image: php:apache-composer
+    container_name: "tramites-unp-server"
+    ports:
+      - 8080:8080
+    volumes:
+      - ./server/app:/var/www/:z
+      - ./server/apache-conf:/etc/apache2:z
+    env_file:
+      - "server.env"
+    depends_on:
+      - db
+  db:
+    image: mariadb
+    container_name: "tramites-unp-db"
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb:/var/lib/mysql
+      #- ./db:/docker-entrypoint-initdb.d:z
+    env_file:
+      - "db.env"
+  client:
+    build: ./client
+    image: nginx:dev
+    container_name: "tramites-unp-client"
+    #volumes:
+      #- ./client/dist:/usr/share/nginx/html:ro
+    ports:
+      - 80:80
+
+volumes: 
+  mariadb:
