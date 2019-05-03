@@ -13,9 +13,9 @@ class CreateRequerimientoTramitePivotTable extends Migration
     public function up()
     {
         Schema::create('requerimiento_tramite', function (Blueprint $table) {
-            $table->integer('requerimiento_id')->unsigned()->index();
+            $table->unsignedBigInteger('requerimiento_id')->index();
+            $table->unsignedBigInteger('tramite_id')->index();
             $table->foreign('requerimiento_id')->references('id')->on('requerimientos')->onDelete('cascade');
-            $table->integer('tramite_id')->unsigned()->index();
             $table->foreign('tramite_id')->references('id')->on('tramites')->onDelete('cascade');
             $table->primary(['requerimiento_id', 'tramite_id']);
         });

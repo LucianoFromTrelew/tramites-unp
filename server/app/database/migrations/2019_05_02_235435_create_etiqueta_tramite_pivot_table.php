@@ -13,9 +13,9 @@ class CreateEtiquetaTramitePivotTable extends Migration
     public function up()
     {
         Schema::create('etiqueta_tramite', function (Blueprint $table) {
-            $table->integer('etiqueta_id')->unsigned()->index();
+            $table->unsignedBigInteger('etiqueta_id')->index();
+            $table->unsignedBigInteger('tramite_id')->index();
             $table->foreign('etiqueta_id')->references('id')->on('etiquetas')->onDelete('cascade');
-            $table->integer('tramite_id')->unsigned()->index();
             $table->foreign('tramite_id')->references('id')->on('tramites')->onDelete('cascade');
             $table->primary(['etiqueta_id', 'tramite_id']);
         });
