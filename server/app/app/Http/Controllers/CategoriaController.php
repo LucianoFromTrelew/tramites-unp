@@ -64,8 +64,4 @@ class CategoriaController extends Controller
         $categoria->delete();
         return response()->json(null, 204);
     }
-
-    public function subcategorias(Categoria $categoria) {
-        return $categoria->subcategorias;
-    }
 }
