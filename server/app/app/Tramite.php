@@ -30,11 +30,22 @@ class Tramite extends Model
     }
 
     public function pasosPorMetodo(Metodo $metodo) {
-        return $this->pasos->where(
-            'metodo_id', 
+        $pasos = $this->pasos->where(
+            'metodo_id',
             '=',
             $metodo->id
         );
+        $res = [];
+        foreach ($pasos as $k => $v) {
+            array_push($res, $v);
+        }
+        return $res;
+    }
+
+    public function metodosDisponibles() {
+        return $this->pasos->map(function ($paso) {
+            return $paso->metodo;
+        })->unique();
     }
     
 }
