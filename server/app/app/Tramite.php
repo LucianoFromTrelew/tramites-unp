@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Metodo;
 
 class Tramite extends Model
 {
@@ -24,8 +25,16 @@ class Tramite extends Model
         return $this->belongsToMany('App\Etiqueta');
     }
 
-    public function metodos() {
-        return $this->hasMany('App\Metodo');
+    public function pasos() {
+        return $this->hasMany('App\Paso');
+    }
+
+    public function pasosPorMetodo(Metodo $metodo) {
+        return $this->pasos->where(
+            'metodo_id', 
+            '=',
+            $metodo->id
+        );
     }
     
 }

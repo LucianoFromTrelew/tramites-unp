@@ -10,6 +10,7 @@ use App\Tramite;
 use App\Documento;
 use App\Requerimiento;
 use App\Etiqueta;
+use App\Metodo;
 
 class TramiteTest extends TestCase
 {
@@ -52,5 +53,14 @@ class TramiteTest extends TestCase
         $this->assertEmpty($this->tramite->documentos);
         $this->assertEmpty($this->tramite->requerimientos);
         $this->assertEmpty($this->tramite->etiquetas);
+    }
+
+    public function testDevuelvePasosCorrectamente() {
+        $pasos = $this->tramite->pasos;
+        $metodo = Metodo::find(3);
+        $this->assertEquals(
+            $pasos->where('metodo_id', '=', 3),
+            $this->tramite->pasosPorMetodo($metodo)
+        );
     }
 }

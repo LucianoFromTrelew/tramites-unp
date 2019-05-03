@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Metodo extends Model
 {
-    protected $fillable = ['descripcion', 'tramite_id'];
-
-    public function tramite() {
-        return $this->belongsTo('App\Tramite');
-    }
+    protected $fillable = ['descripcion'];
 
     public function pasos() {
         return $this->hasMany('App\Paso');
