@@ -11,4 +11,8 @@ class Subcategoria extends Model
     public function categoria() {
         return $this->belongsTo('App\Categoria');
     }
+
+    public function tramites() {
+        return $this->hasMany('App\Tramite');
+    }
 }

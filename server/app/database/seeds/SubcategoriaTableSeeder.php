@@ -14,14 +14,12 @@ class SubcategoriaTableSeeder extends Seeder
      */
     public function run()
     {
-        Subcategoria::truncate();
-
         $faker = \Faker\Factory::create();
 
         foreach (Categoria::all() as $categoria) {
-            for ($i = 0; $i < 3; $i++) {
+            for ($i = 0; $i < random_int(1, 5); $i++) {
                 Subcategoria::create([
-                    'descripcion' => $faker->sentence(),
+                    'descripcion' => $faker->sentence,
                     'categoria_id' => $categoria->id
                 ]);
             }
