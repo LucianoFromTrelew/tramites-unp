@@ -13,6 +13,6 @@ class Paso extends Model
     }
 
     public function metodo() {
-        return $this->hasOne('App\Metodo');
+        return $this->belongsTo('App\Metodo');
     }
 }
