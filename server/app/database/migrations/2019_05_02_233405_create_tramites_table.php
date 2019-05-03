@@ -17,7 +17,13 @@ class CreateTramitesTable extends Migration
             $table->bigIncrements('id');
             $table->string('titulo');
             $table->text('descripcion');
+            $table->unsignedBigInteger('subcategoria_id');
             $table->timestamps();
+
+            $table->foreign('subcategoria_id')
+                ->references('id')
+                ->on('subcategorias')
+                ->onDelete('cascade');
         });
     }
 
