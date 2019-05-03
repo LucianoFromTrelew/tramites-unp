@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -47,13 +48,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        //return response()->json([
-            //'data' => 'Resource not found'
-        //], 404);
-        // This will replace our 404 response with
-        // a JSON response.
-        if ($exception instanceof ModelNotFoundException &&
-            $request->wantsJson())
+        if (
+            ($exception instanceof ModelNotFoundException ||
+            $exception instanceof NotFoundHttpException) &&
+            $request->wantsJson() || $request->isJson())
         {
             return response()->json([
                 'data' => 'Resource not found'
