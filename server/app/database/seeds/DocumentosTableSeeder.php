@@ -23,9 +23,9 @@ class DocumentosTableSeeder extends Seeder
                     Tramite::count()
                 ));
             }
-            $doc = new Documento;
-            $doc->descripcion = $faker->sentence;
-            $doc->save();
+            $doc = Documento::create([
+                'descripcion' => $faker->sentence
+            ]);
             $doc->tramites()->sync($tramite_ids);
             $doc->save();
         }

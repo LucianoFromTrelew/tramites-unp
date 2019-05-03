@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Etiqueta;
+use App\Tramite;
 
 class EtiquetasTableSeeder extends Seeder
 {
@@ -25,10 +26,21 @@ class EtiquetasTableSeeder extends Seeder
             'importante'
         ];
 
+
         foreach ($etiquetas as $etiqueta) {
-            Etiqueta::create([
+            $tramite_ids = [];
+            for ($j = 0; $j < random_int(0,10); $j++) {
+                array_push($tramite_ids, random_int(
+                    Tramite::first()->id,
+                    Tramite::count()
+                ));
+            }
+
+            $et = Etiqueta::create([
                 'descripcion' => $etiqueta
             ]);
+            $et->tramites()->sync($tramite_ids);
+            $et->save();
         }
     }
 }
