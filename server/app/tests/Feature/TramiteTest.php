@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Tramite;
 use App\Documento;
+use App\User;
 
 class TramiteTest extends TestCase
 {
@@ -26,6 +27,13 @@ class TramiteTest extends TestCase
     public function setUp(): void {
         parent::setUp();
         $this->faker = \Faker\Factory::create();
+    }
+
+    public function getAuthHeader() {
+        $token = User::first()->generateToken();
+        return [
+            'Authorization' => "Bearer $token"
+        ];
     }
 
     public function testDevuelveCorrectamenteTramites() {
@@ -117,7 +125,7 @@ class TramiteTest extends TestCase
 
         $response = $this->post("/api/tramites/$tramite->id/documentos", [
             'documento_id' => $nuevo_documento->id
-        ]);
+        ], $this->getAuthHeader());
 
         $response->assertStatus(201);
     }
@@ -130,13 +138,13 @@ class TramiteTest extends TestCase
 
         $response = $this->post("/api/tramites/$tramite->id/documentos", [
             'documento_id' => $nuevo_documento->id
-        ]);
+        ], $this->getAuthHeader());
 
         $response->assertStatus(201);
 
         $another_response = $this->post("/api/tramites/$tramite->id/documentos", [
             'documento_id' => $nuevo_documento->id
-        ]);
+        ], $this->getAuthHeader());
 
         $another_response->assertStatus(400);
     }
@@ -147,7 +155,7 @@ class TramiteTest extends TestCase
 
         $response = $this->delete("/api/tramites/$tramite->id/documentos", [
             'documento_id' => $documento_id
-        ]);
+        ], $this->getAuthHeader());
 
         $response->assertStatus(200);
     }
@@ -158,13 +166,13 @@ class TramiteTest extends TestCase
 
         $response = $this->delete("/api/tramites/$tramite->id/documentos", [
             'documento_id' => $documento_id
-        ]);
+        ], $this->getAuthHeader());
 
         $response->assertStatus(200);
 
         $another_response = $this->delete("/api/tramites/$tramite->id/documentos", [
             'documento_id' => $documento_id
-        ]);
+        ], $this->getAuthHeader());
 
         $another_response->assertStatus(400);
     }
