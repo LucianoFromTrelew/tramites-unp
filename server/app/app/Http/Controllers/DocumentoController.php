@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class DocumentoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth:api")->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -64,16 +69,5 @@ class DocumentoController extends Controller
         $documento->delete();
         return response()->json(null, 204);
     }
-
-    /**
-     * Devuelve los tramites en los que está el documento
-     *
-     * @param  \App\Documento  $documento
-     * @return \Illuminate\Http\Response
-     */
-    public function name(Documento $documento)
-    {
-        return $documento->tramites;
-    }
-    
+   
 }

@@ -10,6 +10,19 @@ use Illuminate\Database\QueryException;
 
 class TramiteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth:api")->except([
+            'index',
+            'show',
+            'metodos',
+            'pasos',
+            'documentos',
+            'requerimientos',
+            'etiquetas',
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
