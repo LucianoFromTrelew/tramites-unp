@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Tramite;
-use App\Subcategoria;
+use App\Categoria;
 
 class TramitesTableSeeder extends Seeder
 {
@@ -39,9 +39,9 @@ class TramitesTableSeeder extends Seeder
             $tramite = new Tramite();
             $tramite->titulo = $titulo;
             $tramite->descripcion = $faker->sentence;
-            $tramite->subcategoria_id = random_int(
-                Subcategoria::first()->id,
-                Subcategoria::count(),
+            $tramite->categoria_id = random_int(
+                Categoria::first()->id,
+                Categoria::count(),
             );
             $tramite->save();
         }

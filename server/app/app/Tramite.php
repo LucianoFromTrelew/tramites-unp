@@ -8,8 +8,8 @@ class Tramite extends Model
 {
     protected $fillable = ['titulo', 'descripcion'];
 
-    public function subcategoria() {
-        return $this->belongsTo('App\Subcategoria');
+    public function categoria() {
+        return $this->belongsTo('App\Categoria');
     }
 
     public function documentos() {
