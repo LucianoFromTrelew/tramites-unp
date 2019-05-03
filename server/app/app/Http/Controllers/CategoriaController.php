@@ -64,4 +64,16 @@ class CategoriaController extends Controller
         $categoria->delete();
         return response()->json(null, 204);
     }
+
+    /**
+     * Devuelve los tramites de esa categoria
+     *
+     * @param  \App\Categoria  $categoria
+     * @return \Illuminate\Http\Response
+     */
+    public function tramites(Categoria $categoria)
+    {
+        return $categoria->tramites;
+    }
+    
 }
