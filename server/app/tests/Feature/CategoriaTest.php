@@ -31,15 +31,4 @@ class CategoriaTest extends TestCase
             ->assertStatus(201)
             ->assertJson(['id' => $count+1, 'descripcion' => 'una descripcion']);
     }
-
-    //public function testCategoriaDevuelveSubcategorias() {
-        //$subcategorias = array();
-        //foreach (Categoria::find(1)->subcategorias() as $sc) {
-            //array_push($subcategorias, $sc);
-        //}
-
-        //$this->json('GET', '/api/categorias/1/subcategorias')
-            //->assertStatus(200)
-            //->assertJson($subcategorias);
-    //}
 }
