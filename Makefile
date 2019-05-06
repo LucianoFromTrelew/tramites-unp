@@ -1,5 +1,5 @@
 all: 
-	npm --prefix client/app run dev & docker-compose up --build
+	npm --prefix client/app run start & docker-compose up --build
 
 clean:
 	docker-compose down && pkill node
