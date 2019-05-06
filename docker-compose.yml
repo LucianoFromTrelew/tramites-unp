@@ -31,10 +31,13 @@ services:
     build: ./client
     image: nginx:dev
     container_name: "tramites-unp-client"
-    #volumes:
-      #- ./client/dist:/usr/share/nginx/html:ro
+    volumes:
+      - ./client/app:/var/www:ro
+      - ./client/nginx_conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./client/nginx_conf/default.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - 80:80
-
+    depends_on:
+      - server
 volumes: 
   mariadb:
