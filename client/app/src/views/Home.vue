@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center align-center row wrap class="home">
-    <!--<AutocompleteInput />-->
+    <AutocompleteInput />
     <!--acá va la lista de trámites, categorías, etiquetas-->
     <router-view />
   </v-layout>
@@ -8,12 +8,12 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import AutocompleteInput from "@/components/AutocompleteInput.vue";
 
 export default {
   name: "home",
   components: {
-    HelloWorld
+    AutocompleteInput
   }
 };
 </script>
