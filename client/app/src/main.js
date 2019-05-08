@@ -5,9 +5,11 @@ import "material-design-icons-iconfont";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import myFilters from "./filters";
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
+Vue.use(myFilters);
 
 new Vue({
   router,
