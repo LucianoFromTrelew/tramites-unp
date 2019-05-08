@@ -5,7 +5,11 @@ import { http } from "@/utils/http";
 Vue.use(Vuex);
 
 const getIdAndDesc = ({ id, descripcion }) => ({ id, descripcion });
-const getIdAndTitle = ({ id, titulo }) => ({ id, titulo });
+const getIdAndDescAndTitle = ({ id, titulo, descripcion }) => ({
+  id,
+  titulo,
+  descripcion
+});
 
 export default new Vuex.Store({
   state: {
@@ -21,7 +25,7 @@ export default new Vuex.Store({
       return state.etiquetas.map(getIdAndDesc);
     },
     tramites(state) {
-      return state.tramites.map(getIdAndTitle);
+      return state.tramites.map(getIdAndDescAndTitle);
     }
   },
   mutations: {
