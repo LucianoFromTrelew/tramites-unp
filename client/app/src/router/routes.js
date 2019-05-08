@@ -15,6 +15,18 @@ const routes = [
       {
         path: "etiquetas",
         component: () => import("@/views/Etiquetas.vue")
+      },
+      {
+        path: "tramites/:id",
+        component: () => import("@/views/TramiteDetail.vue")
+      },
+      {
+        path: "categorias/:id",
+        component: () => import("@/views/CategoriaDetail.vue")
+      },
+      {
+        path: "etiquetas/:id",
+        component: () => import("@/views/EtiquetaDetail.vue")
       }
     ]
   },
