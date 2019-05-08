@@ -1,8 +1,9 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <v-layout justify-center align-center row wrap class="home">
+    <!--<AutocompleteInput />-->
+    <!--acá va la lista de trámites, categorías, etiquetas-->
+    <router-view />
+  </v-layout>
 </template>
 
 <script>
