@@ -1,12 +1,35 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home </router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <!--<div id="app">-->
+  <!--<div id="nav">-->
+  <!--<router-link to="/">Home </router-link> |-->
+  <!--<router-link to="/about">About</router-link>-->
+  <!--</div>-->
+  <!--<router-view />-->
+  <!--</div>-->
+  <v-app id="inspire">
+    <MyHeader />
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout class="main" justify-center align-center>
+          Hola com ova
+        </v-layout>
+      </v-container>
+    </v-content>
+    <MyFooter />
+  </v-app>
 </template>
+
+<script charset="utf-8">
+import MyHeader from "@/layout/MyHeader.vue";
+import MyFooter from "@/layout/MyFooter.vue";
+
+export default {
+  components: {
+    MyHeader,
+    MyFooter
+  }
+};
+</script>
 
 <style>
 #app {
@@ -27,5 +50,9 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.main {
+  min-height: 100vh;
 }
 </style>
