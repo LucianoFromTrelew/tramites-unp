@@ -10,9 +10,7 @@
     <MyHeader />
     <v-content>
       <v-container fluid fill-height>
-        <v-layout class="main" justify-center align-center>
-          Hola com ova
-        </v-layout>
+        <router-view />
       </v-container>
     </v-content>
     <MyFooter />
