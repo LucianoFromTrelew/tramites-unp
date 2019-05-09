@@ -76,7 +76,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log("ruta cambia");
       this.model = null;
     }
   }
