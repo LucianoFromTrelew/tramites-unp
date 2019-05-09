@@ -27,6 +27,31 @@ export default new Vuex.Store({
     tramitesDeEtiqueta: []
   },
   getters: {
+    autocompleteItems(state, getters) {
+      let items = [];
+      getters.categorias.forEach(categoria => {
+        items.push({
+          tipo: "categorias",
+          id: categoria.id,
+          descripcion: `Categoria: ${categoria.descripcion}`
+        });
+      });
+      getters.etiquetas.forEach(etiqueta => {
+        items.push({
+          tipo: "etiquetas",
+          id: etiqueta.id,
+          descripcion: `Etiqueta: ${etiqueta.descripcion}`
+        });
+      });
+      getters.tramites.forEach(tramite => {
+        items.push({
+          tipo: "tramites",
+          id: tramite.id,
+          descripcion: `Tramite: ${tramite.titulo}`
+        });
+      });
+      return items;
+    },
     categorias(state) {
       return state.categorias.map(getIdAndDesc);
     },

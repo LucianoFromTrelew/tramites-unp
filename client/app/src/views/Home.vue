@@ -1,6 +1,9 @@
 <template>
   <v-layout justify-center row wrap class="home">
-    <AutocompleteInput :items="items" @model-selected="onModelSelected" />
+    <AutocompleteInput
+      :items="autocompleteItems"
+      @model-selected="onModelSelected"
+    />
 
     <!--acá va la lista de trámites, categorías, etiquetas-->
     <router-view />
@@ -9,6 +12,7 @@
 
 <script>
 import AutocompleteInput from "@/components/AutocompleteInput.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "home",
@@ -16,31 +20,7 @@ export default {
     AutocompleteInput
   },
   computed: {
-    items() {
-      let items = [];
-      this.$store.getters.categorias.forEach(categoria => {
-        items.push({
-          tipo: "categorias",
-          id: categoria.id,
-          descripcion: `Categoria: ${categoria.descripcion}`
-        });
-      });
-      this.$store.getters.etiquetas.forEach(etiqueta => {
-        items.push({
-          tipo: "etiquetas",
-          id: etiqueta.id,
-          descripcion: `Etiqueta: ${etiqueta.descripcion}`
-        });
-      });
-      this.$store.getters.tramites.forEach(tramite => {
-        items.push({
-          tipo: "tramites",
-          id: tramite.id,
-          descripcion: `Tramite: ${tramite.titulo}`
-        });
-      });
-      return items;
-    }
+    ...mapGetters(["autocompleteItems"])
   },
   methods: {
     getDetailLink(model) {
