@@ -20,7 +20,7 @@
         </v-flex>
       </v-layout>
 
-      <v-expansion-panel>
+      <v-expansion-panel focusable>
         <!--Requerimientos-->
         <v-expansion-panel-content>
           <template v-slot:header>
