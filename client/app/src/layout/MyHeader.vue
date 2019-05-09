@@ -22,7 +22,11 @@
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Trámites UNP</v-toolbar-title>
+      <v-toolbar-title
+        ><router-link to="/" class="white--text text-decoration-none"
+          >Trámites UNP</router-link
+        ></v-toolbar-title
+      >
     </v-toolbar>
   </header>
 </template>
@@ -31,10 +35,14 @@
 export default {
   data() {
     return {
-      drawer: null
+      drawer: false
     };
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.text-decoration-none {
+  text-decoration: none;
+}
+</style>
