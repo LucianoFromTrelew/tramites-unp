@@ -1,10 +1,10 @@
 <template>
   <v-layout row wrap>
-    <div v-if="hasTramites">
+    <template v-if="hasTramites">
       <v-flex xs12 lg6 xl4 v-for="tramite in tramites" :key="tramite.id">
         <TramiteCard :tramite="tramite" @tramite-clicked="onClick" />
       </v-flex>
-    </div>
+    </template>
     <v-flex v-else xs12>
       <h1>No hay trámites para mostrar</h1>
     </v-flex>
