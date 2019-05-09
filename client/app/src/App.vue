@@ -7,6 +7,18 @@
       </v-container>
     </v-content>
     <MyFooter />
+    <v-snackbar
+      v-model="showSnackbar"
+      :timeout="4000"
+      :multi-line="true"
+      :right="true"
+      :top="true"
+    >
+      {{ snackbarMessage }}
+      <v-btn color="pink" flat @click="showSnackbar = false">
+        Cerrar
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -14,6 +26,7 @@
 import MyHeader from "@/layout/MyHeader.vue";
 import MyFooter from "@/layout/MyFooter.vue";
 import Spinner from "@/components/Spinner.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -25,6 +38,19 @@ export default {
     return {
       componentToDisplay: "Spinner"
     };
+  },
+  computed: {
+    showSnackbar: {
+      get() {
+        return this.$store.state.snackbar.showSnackbar;
+      },
+      set(newValue) {
+        this.$store.commit("SET_SNACKBAR_VISIBILITY", newValue);
+      }
+    },
+    ...mapState({
+      snackbarMessage: state => state.snackbar.snackbarMessage
+    })
   },
   async created() {
     try {
