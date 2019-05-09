@@ -4,7 +4,7 @@
       @click="onClick"
       slot-scope="{ hover }"
       :class="`elevation-${hover ? 12 : 2}`"
-      color="grey lighten-2"
+      color="blue lighten-4"
       class="ma-2"
     >
       <v-card-title>
