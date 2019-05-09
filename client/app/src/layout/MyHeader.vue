@@ -2,22 +2,12 @@
   <header>
     <v-navigation-drawer v-model="drawer" fixed app>
       <v-list dense>
-        <v-list-tile @click="">
-          <v-list-tile-action>
-            <v-icon>home</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile @click="">
-          <v-list-tile-action>
-            <v-icon>contact_mail</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Contact</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+        <SidebarLink
+          v-for="(link, i) in sidebarLinks"
+          :link="link"
+          :key="i"
+          @sidebar-link-clicked="onSidebarLinkClick"
+        />
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
@@ -32,11 +22,37 @@
 </template>
 
 <script>
+import SidebarLink from "@/layout/SidebarLink";
 export default {
+  components: {
+    SidebarLink
+  },
   data() {
     return {
-      drawer: false
+      drawer: false,
+      sidebarLinks: [
+        {
+          route: "/",
+          icon: "home",
+          label: "Inicio"
+        },
+        {
+          route: "/categorias",
+          icon: "category",
+          label: "Categorias"
+        },
+        {
+          route: "/etiquetas",
+          icon: "filter_1",
+          label: "Etiquetas"
+        }
+      ]
     };
+  },
+  methods: {
+    onSidebarLinkClick(route) {
+      this.$router.push(route);
+    }
   }
 };
 </script>
