@@ -9,14 +9,13 @@
 
 <script>
 import TramiteList from "@/components/TramiteList";
+import { mapGetters } from "vuex";
 export default {
   components: {
     TramiteList
   },
   computed: {
-    tramites() {
-      return this.$store.getters.tramites;
-    }
+    ...mapGetters(["tramites"])
   },
   methods: {
     onTramiteClick(tramite) {
