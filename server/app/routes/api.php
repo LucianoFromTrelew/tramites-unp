@@ -40,6 +40,7 @@ Route::apiResource('metodos', 'MetodoController');
 
 //Tramites
 Route::get('tramites/{tramite}/metodos', 'TramiteController@metodos');
+Route::get('tramites/{tramite}/categoria', 'TramiteController@categoria');
 Route::get('tramites/{tramite}/pasos/{metodo}', 'TramiteController@pasos');
 Route::get('tramites/{tramite}/documentos', 'TramiteController@documentos');
 Route::get('tramites/{tramite}/requerimientos', 'TramiteController@requerimientos');

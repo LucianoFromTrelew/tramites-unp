@@ -20,6 +20,7 @@ class TramiteController extends Controller
             'documentos',
             'requerimientos',
             'etiquetas',
+            'categoria',
         ]);
     }
 
@@ -134,6 +135,17 @@ class TramiteController extends Controller
     public function etiquetas(Tramite $tramite)
     {
         return $tramite->etiquetas;
+    }
+
+    /**
+     * Devuelve la categoria de un tramite
+     *
+     * @param  \App\Tramite  $tramite
+     * @return \Illuminate\Http\Response
+     */
+    public function categoria(Tramite $tramite)
+    {
+        return $tramite->categoria;
     }
 
     /**
