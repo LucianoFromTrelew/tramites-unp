@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import login from "@/store/auth";
 import { http } from "@/utils/http";
 
 Vue.use(Vuex);
@@ -12,6 +13,9 @@ const getIdAndDescAndTitle = ({ id, titulo, descripcion }) => ({
 });
 
 export default new Vuex.Store({
+  modules: {
+    login
+  },
   state: {
     categorias: [],
     etiquetas: [],
