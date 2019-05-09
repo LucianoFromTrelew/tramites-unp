@@ -45,6 +45,11 @@ export default {
           route: "/etiquetas",
           icon: "filter_1",
           label: "Etiquetas"
+        },
+        {
+          route: "/admin",
+          icon: "person",
+          label: "Administración"
         }
       ]
     };
