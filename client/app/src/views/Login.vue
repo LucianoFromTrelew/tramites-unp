@@ -64,9 +64,10 @@ export default {
         await this.$store.dispatch("login", this.user);
         this.$router.push("/admin");
       } catch (e) {
-        alert("EE TODO mal");
-        console.log({ e });
-        /* handle error */
+        this.$store.dispatch(
+          "snackbar",
+          "Dirección de email o contraseña incorrectos"
+        );
       } finally {
         this.loading = false;
       }
