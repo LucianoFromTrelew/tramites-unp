@@ -43,8 +43,8 @@
             <v-icon right>close</v-icon>
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="green" :to="getDetailLink">
-            Ver más
+          <v-btn color="green" @click="onSelectClick">
+            Seleccionar
           </v-btn>
         </v-card-actions>
       </div>
@@ -59,10 +59,6 @@ export default {
     model: null
   }),
   computed: {
-    getDetailLink() {
-      const { id, tipo } = this.model;
-      return `/${tipo}/${id}`;
-    },
     fields() {
       if (!this.model) return [];
 
@@ -72,6 +68,11 @@ export default {
           value: this.model[key] || "n/a"
         };
       });
+    }
+  },
+  methods: {
+    onSelectClick() {
+      this.$emit("model-selected", this.model);
     }
   },
   watch: {

@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center row wrap class="home">
-    <AutocompleteInput :items="items" />
+    <AutocompleteInput :items="items" @model-selected="onModelSelected" />
 
     <!--acá va la lista de trámites, categorías, etiquetas-->
     <router-view />
@@ -40,6 +40,16 @@ export default {
         });
       });
       return items;
+    }
+  },
+  methods: {
+    getDetailLink(model) {
+      const { id, tipo } = model;
+      return `/${tipo}/${id}`;
+    },
+    onModelSelected(model) {
+      const route = this.getDetailLink(model);
+      this.$router.push(route);
     }
   }
 };
