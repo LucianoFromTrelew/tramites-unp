@@ -16,7 +16,8 @@ export default new Vuex.Store({
     categorias: [],
     etiquetas: [],
     tramites: [],
-    tramiteActual: {}
+    tramiteActual: {},
+    tramitesDeCategoria: []
   },
   getters: {
     categorias(state) {
@@ -27,6 +28,12 @@ export default new Vuex.Store({
     },
     tramites(state) {
       return state.tramites.map(getIdAndDescAndTitle);
+    },
+    categoriaActual(state) {
+      return categoriaId =>
+        state.categorias.find(
+          categoria => categoria.id === parseInt(categoriaId)
+        );
     }
   },
   mutations: {
@@ -41,6 +48,9 @@ export default new Vuex.Store({
     },
     SET_TRAMITE_ACTUAL(state, tramite) {
       state.tramiteActual = tramite;
+    },
+    SET_TRAMITES_DE_CATEGORIA(state, tramites) {
+      state.tramitesDeCategoria = tramites;
     }
   },
   actions: {
@@ -91,6 +101,11 @@ export default new Vuex.Store({
         pasosPorMetodo
       };
       commit("SET_TRAMITE_ACTUAL", tramiteActual);
+    },
+    async getTramitesPerCategoria({ commit }, categoriaId) {
+      const tramites = (await http.get(`categorias/${categoriaId}/tramites`))
+        .data;
+      commit("SET_TRAMITES_DE_CATEGORIA", tramites);
     }
   }
 });
