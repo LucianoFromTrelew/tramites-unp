@@ -3,17 +3,15 @@
     <v-flex xs12 class="pa-3">
       <h3 class="text-xs-center display-2">Tramites</h3>
     </v-flex>
-    <v-flex xs12 lg6 xl4 v-for="tramite in tramites">
-      <TramiteCard :tramite="tramite" @tramite-clicked="onTramiteClick" />
-    </v-flex>
+    <TramiteList :tramites="tramites" @tramite-clicked="onTramiteClick" />
   </v-layout>
 </template>
 
 <script>
-import TramiteCard from "@/components/TramiteCard";
+import TramiteList from "@/components/TramiteList";
 export default {
   components: {
-    TramiteCard
+    TramiteList
   },
   computed: {
     tramites() {
