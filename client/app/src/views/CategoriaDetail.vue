@@ -17,7 +17,9 @@
 import { mapState } from "vuex";
 import Spinner from "@/components/Spinner";
 import TramiteList from "@/components/TramiteList";
+import Editable from "@/mixins/editable";
 export default {
+  mixins: [Editable],
   components: {
     Spinner,
     TramiteList
