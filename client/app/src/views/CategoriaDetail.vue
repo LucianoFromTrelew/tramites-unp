@@ -14,35 +14,7 @@
         />
       </v-flex>
       <v-layout justify-end v-if="isInEditMode">
-        <!--<ConfirmDialog @confirm="onConfirmDelete" />-->
-        <v-dialog v-model="dialog" max-width="350">
-          <v-card>
-            <v-card-title class="headline"
-              >¿Está seguro que desea eliminar la categoría? Eliminará también
-              todos sus trámites</v-card-title
-            >
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn
-                color="green darken-1"
-                class="white--text"
-                @click="dialog = false"
-              >
-                Cancelar
-              </v-btn>
-
-              <v-btn
-                color="red darken-1"
-                class="white--text"
-                @click="onDeleteClick"
-              >
-                Aceptar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-btn color="error" @click="dialog = true">Eliminar</v-btn>
+        <ConfirmDialog @confirm="onConfirmDelete" />
       </v-layout>
     </template>
   </v-layout>
@@ -52,16 +24,17 @@
 import { mapState } from "vuex";
 import Spinner from "@/components/Spinner";
 import TramiteList from "@/components/TramiteList";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import Editable from "@/mixins/editable";
 export default {
   mixins: [Editable],
   components: {
     Spinner,
+    ConfirmDialog,
     TramiteList
   },
   data() {
     return {
-      dialog: false,
       loading: false
     };
   },
@@ -87,7 +60,7 @@ export default {
     onTramiteClick(tramite) {
       this.$router.push(`/tramites/${tramite.id}`);
     },
-    async onDeleteClick() {
+    async onConfirmDelete() {
       try {
         await this.$store.dispatch("deleteCategoria", this.$route.params.id);
         this.$store.dispatch("snackbar", {
@@ -98,7 +71,6 @@ export default {
       } catch (e) {
         console.log({ e });
         this.$store.dispatch("snackbar", "No se pudo eliminar la categoría");
-        /* handle error */
       }
     }
   },
