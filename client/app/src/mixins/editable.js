@@ -5,7 +5,6 @@ export default {
     }
   },
   async mounted() {
-    console.log("EDITABLE mounted");
     await this.$store.dispatch("isEditable", true);
   },
   async deactivated() {
