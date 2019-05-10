@@ -16,20 +16,14 @@ class RequerimientosTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 20; $i++) {
-            $tramite_ids = [];
-            for ($j = 0; $j < random_int(0,10); $j++) {
-                array_push($tramite_ids, random_int(
+        for ($i = 0; $i < 100; $i++) {
+            $req = Requerimiento::create([
+                'descripcion' => $faker->sentence,
+                'tramite_id' => random_int(
                     Tramite::first()->id,
                     Tramite::count()
-                ));
-            }
-            $req = Requerimiento::create([
-                'descripcion' => $faker->sentence
+                )
             ]);
-            $req->tramites()->sync($tramite_ids);
-            $req->save();
-            
         }
     }
 }
