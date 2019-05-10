@@ -21,6 +21,7 @@ export default new Vuex.Store({
   state: {
     categorias: [],
     etiquetas: [],
+    documentos: [],
     tramites: [],
     tramiteActual: {},
     tramitesDeCategoria: [],
@@ -43,6 +44,13 @@ export default new Vuex.Store({
           descripcion: `Etiqueta: ${etiqueta.descripcion}`
         });
       });
+      getters.documentos.forEach(documento => {
+        items.push({
+          tipo: "documentos",
+          id: documento.id,
+          descripcion: `Documento: ${documento.descripcion}`
+        });
+      });
       getters.tramites.forEach(tramite => {
         items.push({
           tipo: "tramites",
@@ -57,6 +65,9 @@ export default new Vuex.Store({
     },
     etiquetas(state) {
       return state.etiquetas.map(getIdAndDesc);
+    },
+    documentos(state) {
+      return state.documentos.map(getIdAndDesc);
     },
     tramites(state) {
       return state.tramites.map(getIdAndDescAndTitle);
@@ -79,8 +90,23 @@ export default new Vuex.Store({
     ADD_ETIQUETAS(state, etiquetas) {
       state.etiquetas = etiquetas;
     },
+    ADD_DOCUMENTOS(state, documentos) {
+      state.documentos = documentos;
+    },
     ADD_TRAMITES(state, tramites) {
       state.tramites = tramites;
+    },
+    ADD_NEW_TRAMITE(state, newTramite) {
+      state.tramites.push(newTramite);
+    },
+    ADD_NEW_CATEGORIA(state, newCategoria) {
+      state.categorias.push(newCategoria);
+    },
+    ADD_NEW_ETIQUETA(state, newEtiqueta) {
+      state.etiquetas.push(newEtiqueta);
+    },
+    ADD_NEW_DOCUMENTO(state, newDocumento) {
+      state.documentos.push(newDocumento);
     },
     SET_TRAMITE_ACTUAL(state, tramite) {
       state.tramiteActual = tramite;
@@ -100,6 +126,10 @@ export default new Vuex.Store({
     async getEtiquetas({ commit }) {
       const response = await http.get("etiquetas");
       commit("ADD_ETIQUETAS", response.data);
+    },
+    async getDocumentos({ commit }) {
+      const response = await http.get("documentos");
+      commit("ADD_DOCUMENTOS", response.data);
     },
     async getTramites({ commit }) {
       const response = await http.get("tramites");
@@ -150,6 +180,41 @@ export default new Vuex.Store({
       const tramites = (await http.get(`categorias/${etiquetaId}/tramites`))
         .data;
       commit("SET_TRAMITES_DE_ETIQUETA", tramites);
+    },
+    async newTramite({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const newTramite = (await http.post("tramites", data, { headers })).data;
+      commit("ADD_NEW_TRAMITE", newTramite);
+    },
+    async newCategoria({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const newCategoria = (await http.post("categorias", data, { headers }))
+        .data;
+      commit("ADD_NEW_CATEGORIA", newCategoria);
+    },
+    async newEtiqueta({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const newEtiqueta = (await http.post("etiquetas", data, { headers }))
+        .data;
+      commit("ADD_NEW_ETIQUETA", newEtiqueta);
+    },
+    async newDocumento({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const newDocumento = (await http.post("documentos", data, { headers }))
+        .data;
+      commit("ADD_NEW_DOCUMENTO", newDocumento);
     }
   }
 });
