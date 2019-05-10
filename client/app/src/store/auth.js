@@ -6,7 +6,8 @@ export default {
     loggedIn: false
   },
   getters: {
-    isLoggedIn: state => state.loggedIn
+    isLoggedIn: state => state.loggedIn,
+    apiToken: state => state.apiToken
   },
   mutations: {
     SET_API_TOKEN(state, apiToken) {
