@@ -10,14 +10,13 @@
       <h3 class="subheading py-2">{{ tramiteActual.tramite.descripcion }}</h3>
       <v-divider />
       <v-layout row wrap>
-        <v-flex xs12>
-          <v-chip
-            class="my-2 font-weight-medium"
-            v-for="etiqueta in tramiteActual.etiquetas"
-          >
-            {{ etiqueta.descripcion }}
-          </v-chip>
-        </v-flex>
+        <!--Etiquetas-->
+        <EtiquetaEnTramiteList
+          :items="$store.getters.etiquetas"
+          :etiquetas="tramiteActual.etiquetas"
+          @delete="onDeleteEtiqueta"
+          @new="onNewEtiqueta"
+        />
       </v-layout>
 
       <v-expansion-panel focusable>
@@ -26,50 +25,23 @@
           <template v-slot:header>
             <div>Requerimientos</div>
           </template>
-          <v-card>
-            <v-card-text>
-              <li>
-                <template
-                  v-for="(requerimiento, i) in tramiteActual.requerimientos"
-                >
-                  <ul class="py-1">
-                    {{
-                      i + 1
-                    }}
-                    -
-                    {{
-                      requerimiento.descripcion
-                    }}
-                  </ul>
-                  <v-divider></v-divider>
-                </template>
-              </li>
-            </v-card-text>
-          </v-card>
+          <RequerimientoList
+            :requerimientos="tramiteActual.requerimientos"
+            @delete="onDeleteRequerimiento"
+            @new="onNewRequerimiento"
+          />
         </v-expansion-panel-content>
         <!--Documentos-->
         <v-expansion-panel-content>
           <template v-slot:header>
             <div>Documentos</div>
           </template>
-          <v-card>
-            <v-card-text>
-              <li>
-                <template v-for="(documento, i) in tramiteActual.documentos">
-                  <ul class="py-1">
-                    {{
-                      i + 1
-                    }}
-                    -
-                    {{
-                      documento.descripcion
-                    }}
-                  </ul>
-                  <v-divider></v-divider>
-                </template>
-              </li>
-            </v-card-text>
-          </v-card>
+          <DocumentoList
+            :items="$store.getters.documentos"
+            :documentos="tramiteActual.documentos"
+            @delete="onDeleteDocumento"
+            @new="onNewDocumento"
+          />
         </v-expansion-panel-content>
         <!--Metodos-->
         <v-expansion-panel-content>
@@ -77,22 +49,37 @@
             <div>Metodos</div>
           </template>
           <v-expansion-panel>
-            <v-expansion-panel-content v-for="metodo in tramiteActual.metodos">
+            <v-expansion-panel-content
+              v-for="(metodo, i) in tramiteActual.metodos"
+              :key="i"
+            >
               <template v-slot:header>
                 <div class="pl-5">{{ metodo.descripcion }}</div>
               </template>
-              <PasosTramite :pasos="getPasosPorMetodo(metodo)" />
+              <PasosTramite
+                :pasos="getPasosPorMetodo(metodo)"
+                :metodo="metodo"
+                @delete="onDeletePaso"
+                @new="onNewPaso"
+              />
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-flex>
+    <ConfirmDialog no-btn @confirm="onConfirm" ref="dialog">{{
+      this.confirmMsg
+    }}</ConfirmDialog>
   </v-layout>
 </template>
 
 <script>
 import Spinner from "@/components/Spinner";
+import EtiquetaEnTramiteList from "@/components/EtiquetaEnTramiteList";
+import RequerimientoList from "@/components/RequerimientoList";
+import DocumentoList from "@/components/DocumentoList";
 import PasosTramite from "@/components/PasosTramite";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import { mapState } from "vuex";
 import Editable from "@/mixins/editable";
 
@@ -100,14 +87,21 @@ export default {
   mixins: [Editable],
   components: {
     Spinner,
-    PasosTramite
+    EtiquetaEnTramiteList,
+    RequerimientoList,
+    DocumentoList,
+    PasosTramite,
+    ConfirmDialog
   },
   computed: {
     ...mapState(["tramiteActual"])
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      confirmMsg: "",
+      afterConfirmPayload: {},
+      afterConfirmAction: ""
     };
   },
   methods: {
@@ -124,6 +118,45 @@ export default {
         /* handle error - display snackbar*/
       } finally {
         this.loading = false;
+      }
+    },
+    onDeleteEtiqueta(etiqueta) {
+      this.confirmMsg = `¿Desea eliminar la etiqueta [${
+        etiqueta.descripcion
+      }]?`;
+      this.afterConfirmPayload = {
+        tramite_id: this.tramiteActual.tramite.id,
+        etiqueta_id: etiqueta.id
+      };
+      this.afterConfirmAction = "deleteEtiquetaTramite";
+      this.afterConfirmSuccessMsg = "Etiqueta removida con éxito";
+      this.afterConfirmErrorMsg = "No se pudo remover la etiqueta";
+      this.$refs.dialog.show();
+    },
+    onNewEtiqueta(etiqueta) {},
+    onDeleteRequerimiento(requerimiento) {},
+    onNewRequerimiento(requerimiento) {},
+    onDeleteDocumento(documento) {},
+    onNewDocumento(documento) {},
+    onDeletePaso(paso, metodo) {},
+    onNewPaso(paso, metodo) {},
+    async onConfirm() {
+      try {
+        const {
+          afterConfirmAction,
+          afterConfirmPayload,
+          afterConfirmSuccessMsg
+        } = this;
+        await this.$store.dispatch(afterConfirmAction, afterConfirmPayload);
+        this.$store.dispatch("snackbar", {
+          msg: afterConfirmSuccessMsg,
+          color: "green"
+        });
+      } catch (e) {
+        console.log({ e });
+        const { afterConfirmErrorMsg } = this;
+        this.$store.dispatch("snackbar", afterConfirmErrorMsg);
+        /* handle error */
       }
     }
   },
