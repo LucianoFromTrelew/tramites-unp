@@ -157,7 +157,7 @@ class TramiteTest extends TestCase
             'documento_id' => $documento_id
         ], $this->getAuthHeader());
 
-        $response->assertStatus(200);
+        $response->assertStatus(204);
     }
 
     public function testNoEliminaDocumentoSiNoEstaVinculadoConElTramite() {
@@ -168,7 +168,7 @@ class TramiteTest extends TestCase
             'documento_id' => $documento_id
         ], $this->getAuthHeader());
 
-        $response->assertStatus(200);
+        $response->assertStatus(204);
 
         $another_response = $this->delete("/api/tramites/$tramite->id/documentos", [
             'documento_id' => $documento_id
