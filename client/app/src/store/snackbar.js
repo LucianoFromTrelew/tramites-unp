@@ -23,6 +23,8 @@ export default {
         msg = payload.msg;
         delete payload.msg;
         commit("SET_SNACKBAR_OPTIONS", payload);
+      } else {
+        msg = payload;
       }
       commit("SET_SNACKBAR_MESSAGE", msg);
       commit("SET_SNACKBAR_VISIBILITY", true);
