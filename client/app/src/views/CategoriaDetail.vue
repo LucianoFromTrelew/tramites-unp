@@ -14,7 +14,10 @@
         />
       </v-flex>
       <v-layout justify-end v-if="isInEditMode">
-        <ConfirmDialog @confirm="onConfirmDelete" />
+        <ConfirmDialog @confirm="onConfirmDelete">
+          ¿Está seguro que desea eliminar la categoría? Eliminará también todos
+          sus trámites
+        </ConfirmDialog>
       </v-layout>
     </template>
   </v-layout>
