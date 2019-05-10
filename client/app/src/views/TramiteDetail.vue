@@ -178,8 +178,35 @@ export default {
         this.$store.dispatch("snackbar", "No se pudo agregar el requerimiento");
       }
     },
-    onDeleteDocumento(documento) {},
-    onNewDocumento(documento) {},
+    onDeleteDocumento(documento) {
+      this.confirmMsg = `¿Desea eliminar el documento [${
+        documento.descripcion
+      }]?`;
+      this.afterConfirmPayload = {
+        tramite_id: this.tramiteActual.tramite.id,
+        documento_id: documento.id
+      };
+      this.afterConfirmAction = "deleteDocumento";
+      this.afterConfirmSuccessMsg = "Documento eliminado con éxito";
+      this.afterConfirmErrorMsg = "No se pudo eliminar el documento";
+      this.$refs.dialog.show();
+    },
+    async onNewDocumento(documento) {
+      try {
+        const payload = {
+          tramite_id: this.tramiteActual.tramite.id,
+          documento
+        };
+        await this.$store.dispatch("newDocumentoTramite", payload);
+        this.$store.dispatch("snackbar", {
+          msg: "Documento agregado con éxito",
+          color: "green"
+        });
+      } catch (e) {
+        console.log({ e });
+        this.$store.dispatch("snackbar", "No se pudo agregar el documento");
+      }
+    },
     onDeletePaso(paso, metodo) {},
     onNewPaso(paso, metodo) {},
     async onConfirm() {
@@ -198,7 +225,6 @@ export default {
         console.log({ e });
         const { afterConfirmErrorMsg } = this;
         this.$store.dispatch("snackbar", afterConfirmErrorMsg);
-        /* handle error */
       }
     }
   },

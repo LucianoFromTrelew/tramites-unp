@@ -136,6 +136,14 @@ export default new Vuex.Store({
     ADD_REQUERIMIENTO_TO_TRAMITE(state, requerimiento) {
       state.tramiteActual.requerimientos.push(requerimiento);
     },
+    DELETE_DOCUMENTO(state, { documento_id }) {
+      state.tramiteActual.documentos = state.tramiteActual.documentos.filter(
+        doc => doc.id !== parseInt(documento_id)
+      );
+    },
+    ADD_DOCUMENTO_TO_TRAMITE(state, { documento }) {
+      state.tramiteActual.documentos.push(documento);
+    },
     DELETE_TRAMITES_PER_CATEGORIA(state, categoriaId) {
       state.tramites = state.tramites.filter(
         tramite => tramite.categoria_id !== parseInt(categoriaId)
@@ -320,6 +328,31 @@ export default new Vuex.Store({
         }
       )).data;
       commit("ADD_REQUERIMIENTO_TO_TRAMITE", res);
+    },
+    async deleteDocumento({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const res = (await http.delete(`tramites/${data.tramite_id}/documentos`, {
+        data,
+        headers
+      })).data;
+      commit("DELETE_DOCUMENTO", data);
+    },
+    async newDocumentoTramite({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const res = (await http.post(
+        `tramites/${data.tramite_id}/documentos`,
+        { documento_id: data.documento.id },
+        {
+          headers
+        }
+      )).data;
+      commit("ADD_DOCUMENTO_TO_TRAMITE", data);
     }
   }
 });
