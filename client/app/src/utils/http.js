@@ -1,6 +1,6 @@
 import axios from "axios";
 const http = axios.create({
-  baseURL: "http://api.tramitesunp/"
+  baseURL: process.env.VUE_APP_API_URL
 });
 
 export { http };
