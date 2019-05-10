@@ -62,7 +62,11 @@ export default {
       try {
         this.loading = true;
         await this.$store.dispatch("login", this.user);
-        this.$router.push("/admin");
+        if (this.$route.query.redirect) {
+          this.$router.replace(this.$route.query.redirect);
+        } else {
+          this.$router.replace("/admin");
+        }
       } catch (e) {
         this.$store.dispatch(
           "snackbar",
