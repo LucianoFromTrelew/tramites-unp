@@ -6,6 +6,7 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("isEditable", true);
+    await this.$store.dispatch("isInEditMode", this.isInEditMode);
   },
   async activated() {
     await this.$store.dispatch("isEditable", true);
