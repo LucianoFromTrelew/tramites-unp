@@ -10,10 +10,10 @@
           <v-divider></v-divider>
         </template>
         <v-layout v-if="$store.getters.isInEditMode">
-          <v-flex xs6 md8 lg10>
+          <v-flex xs3 md8 lg10>
             <v-text-field v-model="nuevoRequerimiento" />
           </v-flex>
-          <v-flex xs4 md4 lg2>
+          <v-flex xs3 md4 lg2>
             <v-btn :disabled="!nuevoRequerimiento" @click="onNew"
               >Agregar requerimiento</v-btn
             >

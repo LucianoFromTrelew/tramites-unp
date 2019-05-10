@@ -7,7 +7,7 @@
       @delete="onDelete"
     ></EtiquetaItem>
     <v-layout v-if="$store.getters.isInEditMode">
-      <v-flex xs6 md8 lg10>
+      <v-flex xs5 md8 lg10>
         <v-select
           v-model="nuevaEtiqueta"
           :items="filterItems()"
