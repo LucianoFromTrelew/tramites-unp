@@ -115,6 +115,11 @@ export default new Vuex.Store({
         categoria => categoria.id !== parseInt(categoriaId)
       );
     },
+    DELETE_ETIQUETA(state, etiquetaId) {
+      state.etiquetas = state.etiquetas.filter(
+        etiqueta => etiqueta.id !== parseInt(etiquetaId)
+      );
+    },
     DELETE_TRAMITES_PER_CATEGORIA(state, categoriaId) {
       state.tramites = state.tramites.filter(
         tramite => tramite.categoria_id !== parseInt(categoriaId)
@@ -189,7 +194,7 @@ export default new Vuex.Store({
       commit("SET_TRAMITES_DE_CATEGORIA", tramites);
     },
     async getTramitesPerEtiqueta({ commit }, etiquetaId) {
-      const tramites = (await http.get(`categorias/${etiquetaId}/tramites`))
+      const tramites = (await http.get(`etiquetas/${etiquetaId}/tramites`))
         .data;
       commit("SET_TRAMITES_DE_ETIQUETA", tramites);
     },
@@ -237,6 +242,15 @@ export default new Vuex.Store({
         .data;
       commit("DELETE_CATEGORIA", categoriaId);
       commit("DELETE_TRAMITES_PER_CATEGORIA", categoriaId);
+    },
+    async deleteEtiqueta({ commit, getters }, etiquetaId) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const res = (await http.delete(`etiquetas/${etiquetaId}`, { headers }))
+        .data;
+      commit("DELETE_ETIQUETA", etiquetaId);
     }
   }
 });
