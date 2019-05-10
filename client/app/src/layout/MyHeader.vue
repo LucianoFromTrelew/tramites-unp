@@ -17,6 +17,14 @@
           >Trámites UNP</router-link
         ></v-toolbar-title
       >
+      <v-spacer />
+      <v-toolbar-title v-if="$store.getters.isEditable"
+        ><router-link
+          :to="getEditPath()"
+          class="white--text text-decoration-none"
+          >Editar</router-link
+        ></v-toolbar-title
+      >
     </v-toolbar>
   </header>
 </template>
@@ -57,6 +65,11 @@ export default {
   methods: {
     onSidebarLinkClick(route) {
       this.$router.push(route);
+    },
+    getEditPath() {
+      if (this.$store.getters.isEditable) {
+        return this.$route.fullPath.concat("/edit");
+      }
     }
   }
 };
