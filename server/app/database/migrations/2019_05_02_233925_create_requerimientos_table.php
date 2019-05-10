@@ -17,6 +17,11 @@ class CreateRequerimientosTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('descripcion');
+            $table->unsignedBigInteger('tramite_id');
+            $table->foreign('tramite_id')
+                ->references('id')
+                ->on('tramites')
+                ->onDelete('cascade');
         });
     }
 
