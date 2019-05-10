@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tramite;
 use App\Documento;
 use App\Metodo;
+use App\Requerimiento;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -180,18 +181,21 @@ class TramiteController extends Controller
      */
     public function requerimiento_store(Request $request, Tramite $tramite)
     {
-        if (!$request->filled('requerimiento_id')) {
-            return response()->json("No hay requerimiento_id", 400);
+        if (!$request->filled('requerimiento')) {
+            return response()->json("No hay requerimiento", 400);
         }
 
-        $requerimiento_id = $request->requerimiento_id;
 
         try {
-            $tramite->requerimientos()->attach($request->requerimiento_id);
-            return response()->json($tramite->requerimientos, 201);
+            $requerimiento = Requerimiento::create([
+                "descripcion" => $request->requerimiento,
+                "tramite_id" => $tramite->id
+            ]);
+            return response()->json($requerimiento, 201);
         } catch (QueryException $e) {
             return response()->json("No se pudo agregar el requerimiento", 400);
         }
+
     }
 
     /**
@@ -255,11 +259,11 @@ class TramiteController extends Controller
 
         $requerimiento_id = $request->requerimiento_id;
 
-        if(!$tramite->requerimientos()->find($requerimiento_id)) {
+        if(!($requerimiento = $tramite->requerimientos()->find($requerimiento_id))) {
             return response()->json("El trámite no tiene el requerimiento agregado", 400);
         }
 
-        $tramite->requerimientos()->detach($request->requerimiento_id);
+        $requerimiento->delete();
         return response()->json($tramite->requerimientos, 200);
     }
 

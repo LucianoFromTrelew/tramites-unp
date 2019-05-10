@@ -137,7 +137,7 @@ export default {
       try {
         const payload = {
           tramite_id: this.tramiteActual.tramite.id,
-          etiqueta: etiqueta
+          etiqueta
         };
         await this.$store.dispatch("newEtiquetaTramite", payload);
         this.$store.dispatch("snackbar", {
@@ -149,8 +149,35 @@ export default {
         this.$store.dispatch("snackbar", "No se pudo agregar la etiqueta");
       }
     },
-    onDeleteRequerimiento(requerimiento) {},
-    onNewRequerimiento(requerimiento) {},
+    onDeleteRequerimiento(requerimiento) {
+      this.confirmMsg = `¿Desea eliminar el requerimiento [${
+        requerimiento.descripcion
+      }]?`;
+      this.afterConfirmPayload = {
+        tramite_id: this.tramiteActual.tramite.id,
+        requerimiento_id: requerimiento.id
+      };
+      this.afterConfirmAction = "deleteRequerimiento";
+      this.afterConfirmSuccessMsg = "Requerimiento eliminado con éxito";
+      this.afterConfirmErrorMsg = "No se pudo eliminar el requerimiento";
+      this.$refs.dialog.show();
+    },
+    async onNewRequerimiento(requerimiento) {
+      try {
+        const payload = {
+          tramite_id: this.tramiteActual.tramite.id,
+          requerimiento
+        };
+        await this.$store.dispatch("newRequerimiento", payload);
+        this.$store.dispatch("snackbar", {
+          msg: "Requerimiento agregado con éxito",
+          color: "green"
+        });
+      } catch (e) {
+        console.log({ e });
+        this.$store.dispatch("snackbar", "No se pudo agregar el requerimiento");
+      }
+    },
     onDeleteDocumento(documento) {},
     onNewDocumento(documento) {},
     onDeletePaso(paso, metodo) {},

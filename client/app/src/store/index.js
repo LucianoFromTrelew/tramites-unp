@@ -120,13 +120,21 @@ export default new Vuex.Store({
         etiqueta => etiqueta.id !== parseInt(etiquetaId)
       );
     },
-    DELETE_ETIQUETA_FROM_TRAMITE(state, { tramite_id, etiqueta_id }) {
+    DELETE_ETIQUETA_FROM_TRAMITE(state, { etiqueta_id }) {
       state.tramiteActual.etiquetas = state.tramiteActual.etiquetas.filter(
         et => et.id !== parseInt(etiqueta_id)
       );
     },
-    ADD_ETIQUETA_TO_TRAMITE(state, { tramite_id, etiqueta }) {
+    ADD_ETIQUETA_TO_TRAMITE(state, { etiqueta }) {
       state.tramiteActual.etiquetas.push(etiqueta);
+    },
+    DELETE_REQUERIMIENTO(state, { requerimiento_id }) {
+      state.tramiteActual.requerimientos = state.tramiteActual.requerimientos.filter(
+        req => req.id !== parseInt(requerimiento_id)
+      );
+    },
+    ADD_REQUERIMIENTO_TO_TRAMITE(state, requerimiento) {
+      state.tramiteActual.requerimientos.push(requerimiento);
     },
     DELETE_TRAMITES_PER_CATEGORIA(state, categoriaId) {
       state.tramites = state.tramites.filter(
@@ -284,6 +292,34 @@ export default new Vuex.Store({
         }
       )).data;
       commit("ADD_ETIQUETA_TO_TRAMITE", data);
+    },
+    async deleteRequerimiento({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const res = (await http.delete(
+        `tramites/${data.tramite_id}/requerimientos`,
+        {
+          data,
+          headers
+        }
+      )).data;
+      commit("DELETE_REQUERIMIENTO", data);
+    },
+    async newRequerimiento({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const res = (await http.post(
+        `tramites/${data.tramite_id}/requerimientos`,
+        { requerimiento: data.requerimiento },
+        {
+          headers
+        }
+      )).data;
+      commit("ADD_REQUERIMIENTO_TO_TRAMITE", res);
     }
   }
 });
