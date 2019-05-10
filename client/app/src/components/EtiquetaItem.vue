@@ -1,7 +1,9 @@
 <template>
   <v-chip class="my-2 font-weight-medium">
     {{ etiqueta.descripcion }}
-    <v-icon right @click="onClickClose">close</v-icon>
+    <v-icon v-if="$store.getters.isInEditMode" right @click="onClickClose"
+      >close</v-icon
+    >
   </v-chip>
 </template>
 

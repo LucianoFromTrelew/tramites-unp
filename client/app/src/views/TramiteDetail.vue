@@ -133,7 +133,22 @@ export default {
       this.afterConfirmErrorMsg = "No se pudo remover la etiqueta";
       this.$refs.dialog.show();
     },
-    onNewEtiqueta(etiqueta) {},
+    async onNewEtiqueta(etiqueta) {
+      try {
+        const payload = {
+          tramite_id: this.tramiteActual.tramite.id,
+          etiqueta: etiqueta
+        };
+        await this.$store.dispatch("newEtiquetaTramite", payload);
+        this.$store.dispatch("snackbar", {
+          msg: "Etiqueta agregada con éxito",
+          color: "green"
+        });
+      } catch (e) {
+        console.log({ e });
+        this.$store.dispatch("snackbar", "No se pudo agregar la etiqueta");
+      }
+    },
     onDeleteRequerimiento(requerimiento) {},
     onNewRequerimiento(requerimiento) {},
     onDeleteDocumento(documento) {},

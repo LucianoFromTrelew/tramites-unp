@@ -6,6 +6,22 @@
       :key="i"
       @delete="onDelete"
     ></EtiquetaItem>
+    <v-layout v-if="$store.getters.isInEditMode">
+      <v-flex xs6 md8 lg10>
+        <v-select
+          v-model="nuevaEtiqueta"
+          :items="filterItems()"
+          item-text="descripcion"
+          label="Nueva etiqueta"
+          return-object
+        />
+      </v-flex>
+      <v-flex xs4 md4 lg2>
+        <v-btn :disabled="!nuevaEtiqueta" @click="onNew"
+          >Agregar etiqueta</v-btn
+        >
+      </v-flex>
+    </v-layout>
   </v-flex>
 </template>
 
@@ -16,9 +32,23 @@ export default {
     EtiquetaItem
   },
   props: ["etiquetas", "items"],
+  data() {
+    return {
+      nuevaEtiqueta: null
+    };
+  },
   methods: {
     onDelete(etiqueta) {
       this.$emit("delete", etiqueta);
+    },
+    onNew() {
+      this.$emit("new", this.nuevaEtiqueta);
+    },
+    isInTramite(etiqueta) {
+      return this.etiquetas.findIndex(et => et.id === etiqueta.id) !== -1;
+    },
+    filterItems() {
+      return this.items.filter(et => !this.isInTramite(et));
     }
   }
 };
