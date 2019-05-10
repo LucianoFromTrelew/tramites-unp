@@ -94,8 +94,10 @@
 import Spinner from "@/components/Spinner";
 import PasosTramite from "@/components/PasosTramite";
 import { mapState } from "vuex";
+import Editable from "@/mixins/editable";
 
 export default {
+  mixins: [Editable],
   components: {
     Spinner,
     PasosTramite
