@@ -19,14 +19,19 @@
           <v-btn
             color="red darken-1"
             class="white--text"
-            @click="$emit('confirm')"
+            @click="
+              $emit('confirm');
+              dialog = false;
+            "
           >
             Aceptar
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-btn color="error" @click="dialog = true">Eliminar</v-btn>
+    <v-btn v-if="shouldDisplayBtn()" color="error" @click="dialog = true"
+      >Eliminar</v-btn
+    >
   </div>
 </template>
 
@@ -36,6 +41,14 @@ export default {
     return {
       dialog: false
     };
+  },
+  methods: {
+    shouldDisplayBtn() {
+      return !this.$attrs.hasOwnProperty("no-btn");
+    },
+    show(value = true) {
+      this.dialog = value;
+    }
   }
 };
 </script>
