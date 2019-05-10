@@ -17,15 +17,41 @@ const routes = [
       },
       {
         path: "tramites/:id",
-        component: () => import("@/views/TramiteDetail.vue")
+        component: () => import("@/views/TramiteDetail.vue"),
+        children: [
+          {
+            path: "edit",
+            component: () => import("@/views/TramiteDetail.vue"),
+            meta: { requiresAuth: true }
+          }
+        ]
       },
       {
         path: "categorias/:id",
-        component: () => import("@/views/CategoriaDetail.vue")
+        component: () => import("@/views/CategoriaDetail.vue"),
+        children: [
+          {
+            path: "edit",
+            component: () => import("@/views/CategoriaDetail.vue"),
+            meta: { requiresAuth: true }
+          }
+        ]
       },
       {
         path: "etiquetas/:id",
-        component: () => import("@/views/EtiquetaDetail.vue")
+        component: () => import("@/views/EtiquetaDetail.vue"),
+        children: [
+          {
+            path: "edit",
+            meta: { requiresAuth: true },
+            component: () => import("@/views/EtiquetaDetail.vue")
+          }
+        ]
+      },
+      {
+        path: "documentos/:id/edit",
+        meta: { requiresAuth: true },
+        component: () => import("@/views/DocumentoDetail.vue")
       }
     ]
   },
