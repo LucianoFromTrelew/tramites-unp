@@ -18,7 +18,7 @@ class Tramite extends Model
     }
 
     public function requerimientos() {
-        return $this->belongsToMany('App\Requerimiento');
+        return $this->hasMany('App\Requerimiento');
     }
 
     public function etiquetas() {

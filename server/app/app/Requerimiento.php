@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Requerimiento extends Model
 {
-    protected $fillable = ['descripcion'];
+    protected $fillable = ['descripcion', 'tramite_id'];
 
     public function tramites() {
-        return $this->belongsToMany('App\Tramite');
+        return $this->belongsToOne('App\Tramite');
     }
 }
