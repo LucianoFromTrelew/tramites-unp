@@ -13,9 +13,11 @@
       :multi-line="true"
       :right="true"
       :top="true"
+      v-bind="snackbarOptions"
+      class="title"
     >
       {{ snackbarMessage }}
-      <v-btn color="pink" flat @click="showSnackbar = false">
+      <v-btn color="white" flat @click="showSnackbar = false">
         Cerrar
       </v-btn>
     </v-snackbar>
@@ -49,13 +51,15 @@ export default {
       }
     },
     ...mapState({
-      snackbarMessage: state => state.snackbar.snackbarMessage
+      snackbarMessage: state => state.snackbar.snackbarMessage,
+      snackbarOptions: state => state.snackbar.snackbarOptions
     })
   },
   async created() {
     try {
       await this.$store.dispatch("getCategorias");
       await this.$store.dispatch("getEtiquetas");
+      await this.$store.dispatch("getDocumentos");
       await this.$store.dispatch("getTramites");
       this.componentToDisplay = "router-view";
     } catch (e) {

@@ -1,7 +1,8 @@
 export default {
   state: {
     showSnackbar: false,
-    snackbarMessage: ""
+    snackbarMessage: "",
+    snackbarOptions: {}
   },
   getters: {},
   mutations: {
@@ -10,10 +11,19 @@ export default {
     },
     SET_SNACKBAR_VISIBILITY(state, value) {
       state.showSnackbar = value;
+    },
+    SET_SNACKBAR_OPTIONS(state, options) {
+      state.snackbarOptions = options;
     }
   },
   actions: {
-    snackbar({ commit }, msg) {
+    snackbar({ commit }, payload) {
+      let msg;
+      if (typeof payload === "object") {
+        msg = payload.msg;
+        delete payload.msg;
+        commit("SET_SNACKBAR_OPTIONS", payload);
+      }
       commit("SET_SNACKBAR_MESSAGE", msg);
       commit("SET_SNACKBAR_VISIBILITY", true);
     }
