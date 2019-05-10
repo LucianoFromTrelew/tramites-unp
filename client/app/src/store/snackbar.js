@@ -19,14 +19,16 @@ export default {
   actions: {
     snackbar({ commit }, payload) {
       let msg;
+      let options = {};
       if (typeof payload === "object") {
         msg = payload.msg;
         delete payload.msg;
-        commit("SET_SNACKBAR_OPTIONS", payload);
+        options = payload;
       } else {
         msg = payload;
       }
       commit("SET_SNACKBAR_MESSAGE", msg);
+      commit("SET_SNACKBAR_OPTIONS", options);
       commit("SET_SNACKBAR_VISIBILITY", true);
     }
   }
