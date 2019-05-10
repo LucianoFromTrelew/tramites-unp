@@ -24,7 +24,6 @@ services:
       - 3306:3306
     volumes:
       - mariadb:/var/lib/mysql
-      #- ./db:/docker-entrypoint-initdb.d:z
     env_file:
       - "db.env"
   client:
