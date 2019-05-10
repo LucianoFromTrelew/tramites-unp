@@ -4,8 +4,8 @@ export default {
       return this.$route.fullPath.endsWith("edit");
     }
   },
-  async created() {
-    console.log("EDITABLE CREATED");
+  async mounted() {
+    console.log("EDITABLE mounted");
     await this.$store.dispatch("isEditable", true);
   },
   async deactivated() {
@@ -16,10 +16,5 @@ export default {
   },
   async destroyed() {
     await this.$store.dispatch("isEditable", false);
-  },
-  watch: {
-    async $route(to, from) {
-      await this.$store.dispatch("isEditable", false);
-    }
   }
 };
