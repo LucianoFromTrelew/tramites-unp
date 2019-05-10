@@ -43,6 +43,7 @@ export default {
     },
     onNew() {
       this.$emit("new", this.nuevaEtiqueta);
+      this.nuevaEtiqueta = null;
     },
     isInTramite(etiqueta) {
       return this.etiquetas.findIndex(et => et.id === etiqueta.id) !== -1;
