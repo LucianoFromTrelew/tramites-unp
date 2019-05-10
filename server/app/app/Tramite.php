@@ -7,7 +7,7 @@ use App\Metodo;
 
 class Tramite extends Model
 {
-    protected $fillable = ['titulo', 'descripcion'];
+    protected $fillable = ['titulo', 'descripcion', 'categoria_id'];
 
     public function categoria() {
         return $this->belongsTo('App\Categoria');
