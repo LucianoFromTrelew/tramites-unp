@@ -110,6 +110,16 @@ export default new Vuex.Store({
     ADD_NEW_DOCUMENTO(state, newDocumento) {
       state.documentos.push(newDocumento);
     },
+    DELETE_CATEGORIA(state, categoriaId) {
+      state.categorias = state.categorias.filter(
+        categoria => categoria.id !== parseInt(categoriaId)
+      );
+    },
+    DELETE_TRAMITES_PER_CATEGORIA(state, categoriaId) {
+      state.tramites = state.tramites.filter(
+        tramite => tramite.categoria_id !== parseInt(categoriaId)
+      );
+    },
     SET_TRAMITE_ACTUAL(state, tramite) {
       state.tramiteActual = tramite;
     },
@@ -217,6 +227,16 @@ export default new Vuex.Store({
       const newDocumento = (await http.post("documentos", data, { headers }))
         .data;
       commit("ADD_NEW_DOCUMENTO", newDocumento);
+    },
+    async deleteCategoria({ commit, getters }, categoriaId) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const res = (await http.delete(`categorias/${categoriaId}`, { headers }))
+        .data;
+      commit("DELETE_CATEGORIA", categoriaId);
+      commit("DELETE_TRAMITES_PER_CATEGORIA", categoriaId);
     }
   }
 });
