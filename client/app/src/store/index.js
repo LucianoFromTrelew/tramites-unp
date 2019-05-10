@@ -144,6 +144,16 @@ export default new Vuex.Store({
     ADD_DOCUMENTO_TO_TRAMITE(state, { documento }) {
       state.tramiteActual.documentos.push(documento);
     },
+    DELETE_PASO(state, { paso_id, metodo_id }) {
+      state.tramiteActual.pasosPorMetodo[
+        metodo_id
+      ] = state.tramiteActual.pasosPorMetodo[metodo_id].filter(
+        p => p.id !== parseInt(paso_id)
+      );
+    },
+    ADD_PASO(state, { paso, metodo_id }) {
+      state.tramiteActual.pasosPorMetodo[metodo_id].push(paso);
+    },
     DELETE_TRAMITES_PER_CATEGORIA(state, categoriaId) {
       state.tramites = state.tramites.filter(
         tramite => tramite.categoria_id !== parseInt(categoriaId)
@@ -353,6 +363,32 @@ export default new Vuex.Store({
         }
       )).data;
       commit("ADD_DOCUMENTO_TO_TRAMITE", data);
+    },
+    async deletePaso({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const res = (await http.delete(`tramites/${data.tramite_id}/pasos`, {
+        data,
+        headers
+      })).data;
+      commit("DELETE_PASO", data);
+    },
+    async newPaso({ commit, getters }, data) {
+      const headers = {
+        Authorization: `Bearer ${getters.apiToken}`
+      };
+
+      const res = (await http.post(
+        `tramites/${data.tramite_id}/pasos/${data.metodo.id}`,
+        { paso: data.paso },
+        {
+          headers
+        }
+      )).data;
+
+      commit("ADD_PASO", { paso: res, metodo_id: data.metodo.id });
     }
   }
 });

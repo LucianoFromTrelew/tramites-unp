@@ -207,8 +207,39 @@ export default {
         this.$store.dispatch("snackbar", "No se pudo agregar el documento");
       }
     },
-    onDeletePaso(paso, metodo) {},
-    onNewPaso(paso, metodo) {},
+    onDeletePaso(payload) {
+      const { paso, metodo } = payload;
+      this.confirmMsg = `¿Desea eliminar el paso [${
+        paso.descripcion
+      }] del método [${metodo.descripcion}]?`;
+      this.afterConfirmPayload = {
+        tramite_id: this.tramiteActual.tramite.id,
+        metodo_id: metodo.id,
+        paso_id: paso.id
+      };
+      this.afterConfirmAction = "deletePaso";
+      this.afterConfirmSuccessMsg = "Paso eliminado con éxito";
+      this.afterConfirmErrorMsg = "No se pudo eliminar el paso";
+      this.$refs.dialog.show();
+    },
+    async onNewPaso(payload) {
+      const { paso, metodo } = payload;
+      try {
+        const data = {
+          tramite_id: this.tramiteActual.tramite.id,
+          metodo,
+          paso
+        };
+        await this.$store.dispatch("newPaso", data);
+        this.$store.dispatch("snackbar", {
+          msg: "Paso agregado con éxito",
+          color: "green"
+        });
+      } catch (e) {
+        console.log({ e });
+        this.$store.dispatch("snackbar", "No se pudo agregar el paso");
+      }
+    },
     async onConfirm() {
       try {
         const {
