@@ -2,10 +2,9 @@
   <div>
     <v-dialog v-model="dialog" v-bind="$attrs" max-width="350">
       <v-card>
-        <v-card-title class="headline"
-          >¿Está seguro que desea eliminar la categoría? Eliminará también todos
-          sus trámites</v-card-title
-        >
+        <v-card-title class="headline">
+          <slot>¿Desea confirmar?</slot>
+        </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
 
