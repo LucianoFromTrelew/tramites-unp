@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tramite;
 use App\Documento;
 use App\Metodo;
+use App\Paso;
 use App\Requerimiento;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -222,6 +223,33 @@ class TramiteController extends Controller
     }
 
     /**
+     * Agrega un nuevo paso de un método a un trámite
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Tramite  $tramite
+     * @param  \App\Metodo  $metodo
+     * @return \Illuminate\Http\Response
+     */
+    public function paso_store(Request $request, Tramite $tramite, Metodo $metodo)
+    {
+        if (!$request->filled('paso')) {
+            return response()->json("No hay paso", 400);
+        }
+
+        $paso = $request->paso;
+        try {
+            $paso = Paso::create([
+                "descripcion" => $paso,
+                "metodo_id" => $metodo->id,
+                "tramite_id" => $tramite->id
+            ]);
+            return response()->json($paso, 201);
+        } catch (QueryException $e) {
+            return response()->json("No se pudo crear el paso", 400);
+        }
+    }
+
+    /**
      * Elimina un documento de un tramite
      *
      * @param  \Illuminate\Http\Request  $request
@@ -241,7 +269,7 @@ class TramiteController extends Controller
         }
 
         $tramite->documentos()->detach($request->documento_id);
-        return response()->json($tramite->documentos, 200);
+        return response()->json(null, 204);
     }
 
     /**
@@ -264,7 +292,7 @@ class TramiteController extends Controller
         }
 
         $requerimiento->delete();
-        return response()->json($tramite->requerimientos, 200);
+        return response()->json(null, 204);
     }
 
     /**
@@ -287,6 +315,29 @@ class TramiteController extends Controller
         }
 
         $tramite->etiquetas()->detach($request->etiqueta_id);
-        return response()->json($tramite->etiquetas, 200);
+        return response()->json(null, 204);
+    }
+
+    /**
+     * Elimina un paso de un tramite
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Tramite  $tramite
+     * @return \Illuminate\Http\Response
+     */
+    public function paso_destroy(Request $request, Tramite $tramite)
+    {
+        if (!$request->filled('paso_id')) {
+            return response()->json("No hay paso_id", 400);
+        }
+
+        $paso_id = $request->paso_id;
+
+        if(!($paso = $tramite->pasos()->find($paso_id))) {
+            return response()->json("El trámite no tiene tal paso", 400);
+        }
+
+        $paso->delete();
+        return response()->json(null, 204);
     }
 }

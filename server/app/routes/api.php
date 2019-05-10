@@ -48,9 +48,11 @@ Route::get('tramites/{tramite}/etiquetas', 'TramiteController@etiquetas');
 Route::post('tramites/{tramite}/documentos', 'TramiteController@documento_store');
 Route::post('tramites/{tramite}/requerimientos', 'TramiteController@requerimiento_store');
 Route::post('tramites/{tramite}/etiquetas', 'TramiteController@etiqueta_store');
+Route::post('tramites/{tramite}/pasos/{metodo}', 'TramiteController@paso_store');
 Route::delete('tramites/{tramite}/documentos', 'TramiteController@documento_destroy');
 Route::delete('tramites/{tramite}/requerimientos', 'TramiteController@requerimiento_destroy');
 Route::delete('tramites/{tramite}/etiquetas', 'TramiteController@etiqueta_destroy');
+Route::delete('tramites/{tramite}/pasos', 'TramiteController@paso_destroy');
 Route::apiResource('tramites', 'TramiteController');
 
 //-----------------------------------------------------------------------------
