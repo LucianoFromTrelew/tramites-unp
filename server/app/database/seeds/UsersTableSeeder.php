@@ -16,20 +16,12 @@ class UsersTableSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        $password = Hash::make('toptal');
+        $password = Hash::make(env('ADMIN_PASSWORD', 'tramitesunp'));
 
         User::create([
             'name' => 'admin',
-            'email' => 'admin@admin.com',
+            'email' => env('ADMIN_EMAIL', 'admin@admin.com'),
             'password' => $password
         ]);
-
-        for ($i = 0; $i < 10; $i++) {
-            User::create([
-                'name' => $faker->name,
-                'email' => $faker->email,
-                'password' => $password,
-            ]);
-        }
     }
 }
