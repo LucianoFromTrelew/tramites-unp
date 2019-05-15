@@ -11,20 +11,20 @@ class Tramite extends Model
 
     protected $fillable = ['titulo', 'descripcion', 'categoria_id'];
 
-    //protected static function boot()
-    //{
-        //parent::boot();
+    protected static function boot()
+    {
+        parent::boot();
 
-        //static::saved(function ($instance) {
-            //foreach (Metodo::all() as $metodo) {
-                //$paso = Paso::create([
-                    //'descripcion' => 'Iniciar tramite',
-                    //'tramite_id' => $instance->id,
-                    //'metodo_id' => $metodo->id,
-                //]);
-            //}
-        //});
-    //}
+        static::saved(function ($instance) {
+            foreach (Metodo::all() as $metodo) {
+                $paso = Paso::create([
+                    'descripcion' => 'Iniciar tramite',
+                    'tramite_id' => $instance->id,
+                    'metodo_id' => $metodo->id,
+                ]);
+            }
+        });
+    }
 
 
     public function categoria() {
