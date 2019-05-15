@@ -4,10 +4,28 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Metodo;
+use App\Paso;
 
 class Tramite extends Model
 {
+
     protected $fillable = ['titulo', 'descripcion', 'categoria_id'];
+
+    //protected static function boot()
+    //{
+        //parent::boot();
+
+        //static::saved(function ($instance) {
+            //foreach (Metodo::all() as $metodo) {
+                //$paso = Paso::create([
+                    //'descripcion' => 'Iniciar tramite',
+                    //'tramite_id' => $instance->id,
+                    //'metodo_id' => $metodo->id,
+                //]);
+            //}
+        //});
+    //}
+
 
     public function categoria() {
         return $this->belongsTo('App\Categoria');
