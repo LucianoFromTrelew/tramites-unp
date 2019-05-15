@@ -18,7 +18,8 @@
         ></v-toolbar-title
       >
       <v-spacer />
-      <v-toolbar-title v-if="$store.getters.isEditable"
+      <v-toolbar-title
+        v-if="$store.getters.isLoggedIn && $store.getters.isEditable"
         ><router-link
           :to="getEditPath()"
           class="white--text text-decoration-none"
