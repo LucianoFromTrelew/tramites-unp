@@ -12,21 +12,17 @@
     <v-stepper-items>
       <v-stepper-content v-for="(paso, i) in pasos" :step="i + 1" :key="i">
         <PasoItem :paso="paso" @delete="onDelete"></PasoItem>
-
-        <v-layout xs4 row wrap>
-          <v-btn class="secondary" @click="onClickPreviousStep">Anterior</v-btn>
-          <v-btn class="primary" @click="onClickNextStep">Siguiente</v-btn>
-          <v-layout v-if="$store.getters.isInEditMode" justify-end xs4>
-            <v-text-field
-              v-model="nuevoPaso"
-              label="Agregar paso"
-            ></v-text-field>
-            <v-btn class="primary" @click="onNew" :disabled="!nuevoPaso"
-              >Agregar paso</v-btn
-            >
-          </v-layout>
-        </v-layout>
       </v-stepper-content>
+      <v-layout xs4 row wrap>
+        <v-btn class="secondary" @click="onClickPreviousStep">Anterior</v-btn>
+        <v-btn class="primary" @click="onClickNextStep">Siguiente</v-btn>
+        <v-layout v-if="$store.getters.isInEditMode" justify-end xs4>
+          <v-text-field v-model="nuevoPaso" label="Agregar paso"></v-text-field>
+          <v-btn class="primary" @click="onNew" :disabled="!nuevoPaso"
+            >Agregar paso</v-btn
+          >
+        </v-layout>
+      </v-layout>
     </v-stepper-items>
   </v-stepper>
 </template>

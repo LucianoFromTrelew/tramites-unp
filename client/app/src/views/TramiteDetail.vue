@@ -50,7 +50,7 @@
           </template>
           <v-expansion-panel>
             <v-expansion-panel-content
-              v-for="(metodo, i) in tramiteActual.metodos"
+              v-for="(metodo, i) in $store.getters.metodos"
               :key="i"
             >
               <template v-slot:header>

@@ -60,6 +60,7 @@ export default {
       await this.$store.dispatch("getCategorias");
       await this.$store.dispatch("getEtiquetas");
       await this.$store.dispatch("getDocumentos");
+      await this.$store.dispatch("getMetodos");
       await this.$store.dispatch("getTramites");
       this.componentToDisplay = "router-view";
     } catch (e) {

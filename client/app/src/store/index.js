@@ -24,6 +24,7 @@ export default new Vuex.Store({
     categorias: [],
     etiquetas: [],
     documentos: [],
+    metodos: [],
     tramites: [],
     tramiteActual: {},
     tramitesDeCategoria: [],
@@ -71,6 +72,9 @@ export default new Vuex.Store({
     documentos(state) {
       return state.documentos.map(getIdAndDesc);
     },
+    metodos(state) {
+      return state.metodos.map(getIdAndDesc);
+    },
     tramites(state) {
       return state.tramites.map(getIdAndDescAndTitle);
     },
@@ -94,6 +98,9 @@ export default new Vuex.Store({
     },
     ADD_DOCUMENTOS(state, documentos) {
       state.documentos = documentos;
+    },
+    ADD_METODOS(state, metodos) {
+      state.metodos = metodos;
     },
     ADD_TRAMITES(state, tramites) {
       state.tramites = tramites;
@@ -182,6 +189,10 @@ export default new Vuex.Store({
       const response = await http.get("documentos");
       commit("ADD_DOCUMENTOS", response.data);
     },
+    async getMetodos({ commit }) {
+      const response = await http.get("metodos");
+      commit("ADD_METODOS", response.data);
+    },
     async getTramites({ commit }) {
       const response = await http.get("tramites");
       commit("ADD_TRAMITES", response.data);
@@ -204,7 +215,7 @@ export default new Vuex.Store({
         `tramites/${tramiteId}/requerimientos`
       )).data;
 
-      const metodos = (await http.get(`tramites/${tramiteId}/metodos`)).data;
+      const metodos = (await http.get(`metodos`)).data;
 
       let pasosPorMetodo = {};
       for (const { id } of metodos) {
